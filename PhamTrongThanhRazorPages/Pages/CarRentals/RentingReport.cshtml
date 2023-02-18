@@ -1,0 +1,71 @@
+﻿@page
+@model PhamTrongThanhRazorPages.Pages.CarRentals.RentingReportModel
+@{
+    ViewData["Title"] = "Car Report Statistic";
+}
+
+<h1>Car Report Statistic</h1>        
+<form method="get">
+    <div class="form-group">
+        <div class="form-group">
+            <label asp-for="@Model.PickupDate"></label>
+            <input asp-for="@Model.PickupDate" class="form-control" />
+            <span asp-validation-for="@Model.PickupDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.ReturnDate"></label>
+            <input asp-for="@Model.ReturnDate" class="form-control"/>
+            <span asp-validation-for="@Model.ReturnDate" class="text-danger"></span>
+        </div>
+        @if (@Model.Message != null)
+        {
+            <span class="text-danger">@Model.Message</span>
+
+        }
+        <div class="form-group">
+            <button class="btn btn-primary" asp-page="Form">Send</button>
+        </div>
+
+    </div>
+</form>
+
+@{
+    if (@Model.ReportStatistics != null && @Model.ReportStatistics.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ReportStatistics[0].CarName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ReportStatistics[0].RentingDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ReportStatistics[0].TotalPrice)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody> 
+            @foreach (var item in @Model.ReportStatistics) 
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CarName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RentingDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPrice)
+                    </td>
+                    <td>
+                        <a asp-page="" asp-route-id="@item">Details</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+}
